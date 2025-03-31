@@ -1,0 +1,15 @@
+[solar]
+solar.server.eaguil.net
+docker.server.eaguil.net
+cloudflared.server.eaguil.net
+kasm.server.eaguil.net
+webserver.server.eaguil.net
+servarr.server.eaguil.net
+jellyfin.server.eaguil.net
+proxy.server.eaguil.net
+matrix.server.eaguil.net
+vault.server.eaguil.net
+glance.server.eaguil.net
+
+[solar:var]
+private_key_file = ~/.ssh/ansible

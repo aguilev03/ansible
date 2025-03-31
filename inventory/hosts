@@ -1,3 +1,6 @@
+[all:vars]
+private_key_file = ~/.ssh/ansible
+
 [solar]
 solar.server.eaguil.net
 docker.server.eaguil.net
@@ -11,5 +14,10 @@ matrix.server.eaguil.net
 vault.server.eaguil.net
 glance.server.eaguil.net
 
-[solar:var]
-private_key_file = ~/.ssh/ansible
+
+[docker]
+docker.server.eaguil.net
+webserver.server.eaguil.net
+servarr.server.eaguil.net
+proxy.server.eaguil.net
+glance.server.eaguil.net

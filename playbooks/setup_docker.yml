@@ -1,0 +1,43 @@
+---
+- name: Setup server with Docker, vim, curl, and user evan
+  become: yes
+  tasks:
+
+    - name: Update apt cache and upgrade the system (safe upgrade)
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Install vim
+      apt:
+        name: vim
+        state: present
+
+    - name: Install curl
+      apt:
+        name: curl
+        state: present
+
+    - name: Add user evan with home directory
+      user:
+        name: evan
+        state: present
+        create_home: yes
+
+    - name: Make evan a sudoer
+      lineinfile:
+        path: /etc/sudoers
+        regexp: '^evan'
+        line: 'evan  ALL=(ALL) NOPASSWD:ALL'
+        validate: visudo -cf %s
+
+    - name: Add evan to the docker group
+      user:
+        name: evan
+        groups: docker
+        append: yes

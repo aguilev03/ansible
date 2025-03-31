@@ -1,0 +1,25 @@
+- name: Update all Docker Containers
+  hosts: docker
+  become: yes
+  tasks:
+    - name: Gather information on all running containers
+      community.docker.docker_container_info:
+        filters:
+          status: running
+      register: running_containers
+
+    - name: Pull latest images for all running containers
+      community.docker.docker_image:
+        name: "{{ item.Config.Image.split(':')[0] }}"
+        source: pull
+      loop: "{{ running_containers.containers }}"
+      when: item.Config.Image is defined
+
+    - name: Recreate and restart all containers
+      community.docker.docker_container:
+        name: "{{ item.Name | regex_replace('^/', '') }}"
+        image: "{{ item.Config.Image }}"
+        state: started
+        recreate: yes
+      loop: "{{ running_containers.containers }}"
+      when: item.Config.Image is defined

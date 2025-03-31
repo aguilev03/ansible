@@ -1,0 +1,13 @@
+- name: Gather information on all running containers
+  hosts: docker
+  become: yes
+  tasks:
+    - name: Gather container information
+      community.docker.docker_container_info:
+        filters:
+          status: running
+      register: running_containers
+
+    - name: Debug container info
+      debug:
+        var: running_containers

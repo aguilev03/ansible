@@ -1,33 +1,27 @@
 #!/bin/bash
+# Script to set up SSH key authentication for a user with a specified public key file and remote host
 
-# Run as root (check if script is run with sudo)
-if [ "$(id -u)" -ne 0 ]; then
-    echo "This script must be run as root." 1>&2
+if [ "$#" -lt 3 ]; then
+    echo "Usage: $0 <username> <public_key_filename> <remote_host>"
     exit 1
 fi
 
-# Update apt and upgrade the system
-echo "Updating apt and upgrading the system..."
-apt update && apt upgrade -y
+USER_NAME=$1
+PUB_KEY_FILE=$2
+REMOTE_HOST=$3
 
-# Install Docker
-echo "Installing Docker..."
-apt install -y docker.io
+# Check if the specified public key file exists
+if [ ! -f ~/.ssh/$PUB_KEY_FILE ]; then
+    echo "Public key file '$PUB_KEY_FILE' not found in ~/.ssh/. Please provide a valid public key file."
+    exit 1
+fi
 
-# Install vim and curl
-echo "Installing vim and curl..."
-apt install -y vim curl
+echo "Setting up SSH key for $USER_NAME using key file $PUB_KEY_FILE on $REMOTE_HOST..."
 
-# Add user 'evan' with home directory
-echo "Adding user 'evan'..."
-useradd -m evan
+# Ensure .ssh directory exists on the remote host
+ssh $USER_NAME@$REMOTE_HOST "mkdir -p /home/$USER_NAME/.ssh"
 
-# Add 'evan' to the sudoers file with NOPASSWD
-echo "Making 'evan' a sudoer..."
-echo "evan  ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# Copy the public key to the user's authorized_keys file
+ssh-copy-id -i ~/.ssh/$PUB_KEY_FILE $USER_NAME@$REMOTE_HOST
 
-# Add 'evan' to the docker group
-echo "Adding 'evan' to the docker group..."
-usermod -aG docker evan
-
-echo "Script execution completed."
+echo "SSH key setup completed for $USER_NAME using the key '$PUB_KEY_FILE' on $REMOTE_HOST."

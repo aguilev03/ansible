@@ -2,6 +2,15 @@
 
 This repository contains Ansible playbooks for managing and maintaining Proxmox nodes and their containers. The initial playbook is designed to perform system upgrades using `apt` across Proxmox and its containers.
 
+## Current Uses:
+### Apt update
+ansible-playbook ./playbooks/apt.yml --key-file ~/.ssh/ansible --ask-become-pass -i inventory/hosts
+
+### Apt update with password
+ansible-playbook -i inventory/hosts playbooks/apt.yml --ask-pass --ask-become-pass -l [server]
+
+
+
 ## Features
 
 - **Automated Upgrades**: Runs `apt upgrade` across all specified nodes and containers.

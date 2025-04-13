@@ -1,5 +1,5 @@
 [all:vars]
-private_key_file = ~/.ssh/ansible.pub
+private_key_file = ~/.ssh/ansible
 
 [solar]
 solar.server.eaguil.net
@@ -14,6 +14,8 @@ matrix.server.eaguil.net
 vault.server.eaguil.net
 glance.server.eaguil.net
 pihole.server.eaguil.net
+
+[nextcloud]
 nextcloud.server.eaguil.net ansible_user=evan
 
 [docker]

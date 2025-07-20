@@ -1,19 +1,18 @@
-[all:vars]
-private_key_file = ~/.ssh/ansible
-
 [solar]
 solar.server.eaguil.net
 docker.server.eaguil.net
 cloudflared.server.eaguil.net
 kasm.server.eaguil.net
 webserver.server.eaguil.net
-servarr.server.eaguil.net
-jellyfin.server.eaguil.net
+#servarr.server.eaguil.net
+#jellyfin.server.eaguil.net
 proxy.server.eaguil.net
-matrix.server.eaguil.net
+#matrix.server.eaguil.net
 vault.server.eaguil.net
 glance.server.eaguil.net
 pihole.server.eaguil.net
+#nextcloud.server.eaguil.net
+zammad.server.eaguil.net
 
 [nextcloud]
 nextcloud.server.eaguil.net ansible_user=evan
